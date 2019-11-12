@@ -71,5 +71,18 @@ namespace VideoFunAppUI
         {
             mePlayer.Source = new Uri(newSource);
         }
+
+        private void changeTo(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = (ComboBoxItem)Combo.SelectedItem;
+            if (selectedItem == null)
+                return;
+
+            var selectedLanguage = selectedItem.Tag;
+
+
+            textBox.Text = (string)selectedLanguage;
+            textBlock.Text = (string)selectedLanguage;
+        }
     }
 }
