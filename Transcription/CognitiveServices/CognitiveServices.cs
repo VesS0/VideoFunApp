@@ -16,5 +16,10 @@ namespace Transcription
         {
             return new Translation();
         }
+
+        private static void PingCognitiveServices()
+        {
+
+        }
     }
 }

@@ -4,7 +4,18 @@ using System.Text;
 
 namespace Transcription
 {
-    class Video
+    public class Video
     {
+        public string Path { get; set; }
+
+        public Video() { }
+        public Video(string path)
+        {
+            Path = path;
+        }
+        public static Video ImportVideo(string path)
+        {
+            return new Video(path);
+        }
     }
 }

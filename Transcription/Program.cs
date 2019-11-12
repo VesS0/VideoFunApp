@@ -7,8 +7,9 @@ namespace Transcription
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            var pathToVideo = @"C:\Repos\video-1573565254.mp4";
 
-            var video = Video.ImportVideo("blabla");
+            var video = Video.ImportVideo(pathToVideo);
 
             var audio = ffmpeg.ExtractAudio(video);
 
