@@ -29,6 +29,16 @@ namespace VideoFunAppUI
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
             timer.Start();
+            textBlock.Text = "Ajajaj puertoriko newline \r\n new line Ajajaj puertorikoAjajaj puertoriko" +
+                "\r\n new line Ajajaj puertorikoAjajaj puertoriko" +
+                "\r\n new line Ajajaj puertorikoAjajaj puertoriko" +
+                "\r\n new line Ajajaj puertorikoAjajaj puertoriko" +
+                "v" +
+                "\r\n new line Ajajaj puertorikoAjajaj puertoriko" +
+                "\r\n new line Ajajaj puertorikoAjajaj puertoriko" +
+                "\r\n new line Ajajaj puertorikoAjajaj puertoriko";
+
+            textBox.Text = "aPSAl pals okaso kwep lfwpl \r\n dpslokods okds okdsod ";
         }
 
         void timer_Tick(object sender, EventArgs e)

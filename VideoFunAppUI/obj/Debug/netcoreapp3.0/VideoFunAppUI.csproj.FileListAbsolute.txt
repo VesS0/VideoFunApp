@@ -14,3 +14,4 @@ C:\Repos\VideoFunApp\VideoFunAppUI\obj\Debug\netcoreapp3.0\VideoFunAppUI.Assembl
 C:\Repos\VideoFunApp\VideoFunAppUI\obj\Debug\netcoreapp3.0\VideoFunAppUI.AssemblyInfo.cs
 C:\Repos\VideoFunApp\VideoFunAppUI\obj\Debug\netcoreapp3.0\VideoFunAppUI.dll
 C:\Repos\VideoFunApp\VideoFunAppUI\obj\Debug\netcoreapp3.0\VideoFunAppUI.pdb
+C:\Repos\VideoFunApp\VideoFunAppUI\obj\Debug\netcoreapp3.0\VideoFunAppUI.csprojAssemblyReference.cache

@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VideoFunAppUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="509" Width="800">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <MediaElement Source="C:\Repos\video-1573565254.mp4" LoadedBehavior="Manual" Name="mePlayer" />
+        <MediaElement Source="C:\Repos\video-1573565254.mp4" LoadedBehavior="Manual" Name="mePlayer" Margin="0,0,185,61" />
         <StackPanel Grid.Row="1">
             <Label Name="lblStatus" Content="Not playing..." HorizontalContentAlignment="Center" Margin="5" />
             <WrapPanel HorizontalAlignment="Center">
@@ -20,5 +20,7 @@
                 <Button Name="btnStop" Click="btnStop_Click">Stop</Button>
             </WrapPanel>
         </StackPanel>
+        <TextBox HorizontalAlignment="Left" Margin="615,10,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Height="343" Width="155" Name="textBlock"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,358,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="760" Height="49" RenderTransformOrigin="0.499,0.227" Name="textBox"/>
     </Grid>
 </Window>
