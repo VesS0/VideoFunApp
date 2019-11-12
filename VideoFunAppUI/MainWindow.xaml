@@ -20,7 +20,13 @@
                 <Button Name="btnStop" Click="btnStop_Click">Stop</Button>
             </WrapPanel>
         </StackPanel>
-        <TextBox HorizontalAlignment="Left" Margin="615,10,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Height="325" Width="155" Name="textBlock"/>
+        <StackPanel Margin="615,305,10,80"/>
+        <TextBox HorizontalAlignment="Left" Margin="610,0,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Height="257" Width="160" Name="textBlock" RenderTransformOrigin="0.51,0.477"/>
         <TextBox HorizontalAlignment="Center" Margin="0,358,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="760" Height="49" RenderTransformOrigin="0.499,0.227" Name="textBox"/>
+        <ComboBox Margin="610,278,5,96">
+            <ComboBoxItem Content="ComboBox Item #1"/>
+            <ComboBoxItem IsSelected="True" Content="ComboBox Item #2"/>
+            <ComboBoxItem Content="ComboBox Item #3"/>
+        </ComboBox>
     </Grid>
 </Window>
