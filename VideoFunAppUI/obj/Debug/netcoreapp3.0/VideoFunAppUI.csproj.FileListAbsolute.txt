@@ -1,0 +1,16 @@
+C:\Repos\VideoFunApp\VideoFunAppUI\obj\Debug\netcoreapp3.0\MainWindow.g.cs
+C:\Repos\VideoFunApp\VideoFunAppUI\obj\Debug\netcoreapp3.0\App.g.cs
+C:\Repos\VideoFunApp\VideoFunAppUI\obj\Debug\netcoreapp3.0\VideoFunAppUI_MarkupCompile.cache
+C:\Repos\VideoFunApp\VideoFunAppUI\obj\Debug\netcoreapp3.0\VideoFunAppUI_MarkupCompile.lref
+C:\Repos\VideoFunApp\VideoFunAppUI\bin\Debug\netcoreapp3.0\VideoFunAppUI.exe
+C:\Repos\VideoFunApp\VideoFunAppUI\bin\Debug\netcoreapp3.0\VideoFunAppUI.deps.json
+C:\Repos\VideoFunApp\VideoFunAppUI\bin\Debug\netcoreapp3.0\VideoFunAppUI.runtimeconfig.json
+C:\Repos\VideoFunApp\VideoFunAppUI\bin\Debug\netcoreapp3.0\VideoFunAppUI.runtimeconfig.dev.json
+C:\Repos\VideoFunApp\VideoFunAppUI\bin\Debug\netcoreapp3.0\VideoFunAppUI.dll
+C:\Repos\VideoFunApp\VideoFunAppUI\bin\Debug\netcoreapp3.0\VideoFunAppUI.pdb
+C:\Repos\VideoFunApp\VideoFunAppUI\obj\Debug\netcoreapp3.0\MainWindow.baml
+C:\Repos\VideoFunApp\VideoFunAppUI\obj\Debug\netcoreapp3.0\VideoFunAppUI.g.resources
+C:\Repos\VideoFunApp\VideoFunAppUI\obj\Debug\netcoreapp3.0\VideoFunAppUI.AssemblyInfoInputs.cache
+C:\Repos\VideoFunApp\VideoFunAppUI\obj\Debug\netcoreapp3.0\VideoFunAppUI.AssemblyInfo.cs
+C:\Repos\VideoFunApp\VideoFunAppUI\obj\Debug\netcoreapp3.0\VideoFunAppUI.dll
+C:\Repos\VideoFunApp\VideoFunAppUI\obj\Debug\netcoreapp3.0\VideoFunAppUI.pdb
