@@ -20,7 +20,7 @@
                 <Button Name="btnStop" Click="btnStop_Click">Stop</Button>
             </WrapPanel>
         </StackPanel>
-        <TextBox HorizontalAlignment="Left" Margin="615,10,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Height="343" Width="155" Name="textBlock"/>
+        <TextBox HorizontalAlignment="Left" Margin="615,10,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Height="325" Width="155" Name="textBlock"/>
         <TextBox HorizontalAlignment="Center" Margin="0,358,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="760" Height="49" RenderTransformOrigin="0.499,0.227" Name="textBox"/>
     </Grid>
 </Window>
