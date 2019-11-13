@@ -83,7 +83,6 @@ namespace VideoFunAppUI
 
             var selectedLanguage = selectedItem.Tag;
 
-
             textBox.Text = (string)selectedLanguage;
             textBlock.Text = (string)selectedLanguage;
         }
