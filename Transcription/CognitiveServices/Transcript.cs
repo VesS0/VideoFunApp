@@ -130,7 +130,7 @@ namespace Transcription
 
             string pathTranscript = pathWav.Substring(0, pathWav.Length - 3) + "txt";
 
-            System.IO.File.WriteAllText(pathTranscript, TranscriptBulkText);
+            System.IO.File.WriteAllText(pathTranscript, TranscriptBulkText.Value);
         }
 
         private static string AggregateTranscript(string aggregated, string newLine)
