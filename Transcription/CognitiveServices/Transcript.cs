@@ -9,7 +9,7 @@ namespace Transcription
 {
     public class Transcript
     {
-        public string TranscriptBulkText { get => TranscriptLines.Aggregate<string>(AggregateTranscript); }
+        public Lazy<string> TranscriptBulkText => new Lazy<string>(TranscriptLines.Aggregate(AggregateTranscript));
 
         public List<string> TranscriptLines { get; set; } = new List<string>();
 

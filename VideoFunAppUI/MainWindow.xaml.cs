@@ -40,7 +40,7 @@ namespace VideoFunAppUI
 
             currentTranscript = new Transcript(audio, Transcript.Language.fr);
 
-            textBlock.Text = currentTranscript.TranscriptBulkText;
+            textBlock.Text = currentTranscript.TranscriptBulkText.Value;
 
             textBox.Text = textBlock.Text;
         }
