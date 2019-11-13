@@ -39,3 +39,6 @@ Thumbs.db
 .vs/
 Transcription/obj/
 VideoFunAppUI/obj/
+Transcription/bin/
+*.pdb
+*.json
