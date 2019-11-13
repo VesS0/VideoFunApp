@@ -74,12 +74,14 @@ namespace VideoFunAppUI
 
         private void changeTo(object sender, RoutedEventArgs e)
         {
-            var selectedItem = (ComboBoxItem)Combo.SelectedItem;
+            var selectedItem = (ComboBoxItem)sender;
+
             if (selectedItem == null)
+            {
                 return;
+            }
 
             var selectedLanguage = selectedItem.Tag;
-
 
             textBox.Text = (string)selectedLanguage;
             textBlock.Text = (string)selectedLanguage;
