@@ -1,10 +1,110 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.CognitiveServices.Speech;
+using Microsoft.CognitiveServices.Speech.Audio;
 
 namespace Transcription
 {
     class Transcript
     {
+        public static async Task RecognizeSpeechAsync(
+            string pathWav = @"C:\Users\v-isbojo\Pictures\OtherLangVideo\frfr_output.wav",
+            string cogServiceOption = "simple",
+            string speechLanguage = "en-us"
+            )
+        {
+            var config = SpeechConfig.FromSubscription("5d282cd785cf4cf6aacbd809fbdc7576", "francecentral");
+            string transcript = "";
+            config.SpeechRecognitionLanguage = speechLanguage;
+            switch (cogServiceOption)
+            {
+                case "simple":
+                    config.OutputFormat = OutputFormat.Simple;
+                    break;
+                case "detailedtext":
+                case "detailedbest":
+                    config.OutputFormat = OutputFormat.Detailed;
+                    break;
+                default:
+                    throw new ArgumentException();
+            }
+            var stopRecognition = new TaskCompletionSource<int>();
+            using (var audioConfig = AudioConfig.FromWavFileInput(pathWav))
+            {
+                using (var recognizer = new SpeechRecognizer(config, audioConfig))
+                {
+                    // Subscribes to events.
+                    recognizer.Recognizing += (s, e) =>
+                    {
+                        Console.WriteLine($"\n    Partial result: {e.Result.Text}.");
+                    };
+
+                    recognizer.Recognized += (s, e) =>
+                    {
+
+                        if (e.Result.Reason == ResultReason.RecognizedSpeech)
+                        {
+                            switch (cogServiceOption)
+                            {
+                                case "simple":
+                                case "detailedtext":
+                                    Console.WriteLine($"RECOGNIZED: Text={e.Result.Text}");
+                                    transcript += e.Result.Text + System.Environment.NewLine;
+                                    break;
+                                case "detailedbest":
+                                    Console.WriteLine($"RECOGNIZED: Text={e.Result.Best().FirstOrDefault()?.Text}");
+                                    transcript += e.Result.Best().FirstOrDefault()?.Text + System.Environment.NewLine;
+                                    break;
+                                default:
+                                    throw new ArgumentException();
+                            }
+                        }
+
+                        else if (e.Result.Reason == ResultReason.NoMatch)
+                        {
+                            Console.WriteLine($"NOMATCH: Speech could not be recognized.");
+                        }
+                    };
+
+                    recognizer.Canceled += (s, e) =>
+                    {
+                        Console.WriteLine($"CANCELED: Reason={e.Reason}");
+                        if (e.Reason == CancellationReason.Error)
+                        {
+                            Console.WriteLine($"CANCELED: ErrorDetails={e.ErrorDetails}");
+                            Console.WriteLine($"CANCELED: Did you update the subscription info?");
+                        }
+                        stopRecognition.TrySetResult(0);
+                    };
+
+                    recognizer.SessionStarted += (s, e) =>
+                    {
+                        Console.WriteLine("\n    Session started event.");
+                    };
+
+                    recognizer.SessionStopped += (s, e) =>
+                    {
+                        Console.WriteLine("\n    Session stopped event.");
+                        Console.WriteLine("\nStop recognition.");
+                        stopRecognition.TrySetResult(0);
+                    };
+
+                    // Starts continuous recognition. Uses StopContinuousRecognitionAsync() to stop recognition.
+                    await recognizer.StartContinuousRecognitionAsync().ConfigureAwait(false);
+
+                    // Waits for completion.
+                    // Use Task.WaitAny to keep the task rooted.
+                    Task.WaitAny(new[] { stopRecognition.Task });
+
+                    // Stops recognition.
+                    await recognizer.StopContinuousRecognitionAsync().ConfigureAwait(false);
+                }
+            }
+
+            string pathTranscript = pathWav.Substring(0, pathWav.Length - 3) + "txt";
+
+            System.IO.File.WriteAllText(pathTranscript, transcript);
+        }
     }
 }

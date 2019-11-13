@@ -7,9 +7,16 @@ namespace Transcription
 {
     class CognitiveServices
     {
-        public static Transcript GetTranscript(Audio audio)
+        public static void GetTranscript(Audio audio)
         {
-            return new Transcript();
+            try
+            {
+                Transcript.RecognizeSpeechAsync(audio.Path, "simple", "it-it").Wait();
+            }
+            catch(Exception ex)
+            {
+                _ = ex;
+            }
         }
 
         public static Translation GetTranslation(Transcript trans, string[] languages)
