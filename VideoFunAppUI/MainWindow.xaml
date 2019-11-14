@@ -15,20 +15,17 @@
         <StackPanel Grid.Row="1">
             <Label Name="lblStatus" Content="Not playing..." HorizontalContentAlignment="Center" Margin="5" />
             <WrapPanel HorizontalAlignment="Center">
-                <Button Name="btnPlay" Click="btnPlay_Click">Play</Button>
-                <Button Name="btnPause" Margin="5,0" Click="btnPause_Click">Pause</Button>
-                <Button Name="btnStop" Click="btnStop_Click">Stop</Button>
+                <Button IsEnabled="False" Name="btnPlay" Click="btnPlay_Click">Play</Button>
+                <Button IsEnabled="False" Name="btnPause" Margin="5,0" Click="btnPause_Click">Pause</Button>
+                <Button IsEnabled="False" Name="btnStop" Click="btnStop_Click">Stop</Button>
             </WrapPanel>
         </StackPanel>
         <StackPanel Margin="620,351,5,34"/>
         <TextBox HorizontalAlignment="Center" Margin="0,449,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="760" Height="49" RenderTransformOrigin="0.499,0.227" Name="textBox"/>
-        <ComboBox Margin="605,384,10,69" x:Name="Combo_Copy1">
-            <ComboBoxItem Content="English" Tag="en" Selected="changeTo"/>
-            <ComboBoxItem Content="bb" Tag="bb"  Selected="changeTo"/>
-            <ComboBoxItem Content="France" Tag="fr" Selected="changeTo"/>
-        </ComboBox>
+        <ComboBox IsEnabled="False" Margin="605,384,10,69" Name="ComboTranslation"/>
         <TextBox HorizontalAlignment="Left" Margin="608,109,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Height="257" Width="160" Name="textBlock" RenderTransformOrigin="0.51,0.477"/>
-        <Button Content="Select Video" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="SelectVideoButton_Click"/>
-        <TextBox HorizontalAlignment="Left" Margin="116,10,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="436" Height="25" Name="tbvideoname" TextChanged="textBox_TextChanged" />
+        <Button Name="VideoSelection" IsEnabled="False" Content="Select Video" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="SelectVideoButton_Click"/>
+        <TextBox HorizontalAlignment="Left" Margin="116,10,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="436" Height="25" Name="tbvideoname" />
+        <ComboBox Margin="606,12,10,449" Name="ComboTranscription"/>
     </Grid>
 </Window>

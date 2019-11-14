@@ -121,8 +121,9 @@ namespace Transcription
         public List<Translation> translations = new List<Translation>();
         private string textToBeTranslated = "";
         Language[] listOfLanguages;
-        public TranslateText(string text = "Hello, My name is Isidora", Language[] languages = default(Language[]))
+        public TranslateText(Transcript transcript, Language[] languages = default(Language[]))
         {
+
             if (languages == default(Language[]))
             {
                 listOfLanguages = new Language[] { Language.German, Language.Italian, Language.SerbianLatin };
@@ -131,7 +132,7 @@ namespace Transcription
             {
                 listOfLanguages = languages;
             }
-            textToBeTranslated = text;
+            textToBeTranslated = transcript.TranscriptBulkText.Value;
             try
             {
                 TranslateTextRequest().Wait();

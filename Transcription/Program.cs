@@ -15,7 +15,7 @@ namespace Transcription
 
             Transcript transcript = new Transcript(audio, Transcript.Language.EnglishUS);
 
-            TranslateText translate = new TranslateText(String.Join(" ", transcript.TranscriptLines));
+            TranslateText translate = new TranslateText(transcript);
 
             Console.WriteLine("Press any key to continue.");
             Console.ReadKey();

@@ -24,15 +24,38 @@ namespace VideoFunAppUI
     public partial class MainWindow : Window
     {
         Transcript currentTranscript;
+        Transcript.Language currentTranscriptLanguage;
 
         public MainWindow()
         {
             InitializeComponent();
+            PopulateComboBoxWithTranscriptions();
+        }
+
+        private void PopulateComboBoxWithTranscriptions()
+        {
+            foreach (var lang in (Language[])Enum.GetValues(typeof(Transcription.Language)))
+            {
+                var comboBoxItem = new ComboBoxItem() { Content = lang.ToString() };
+                comboBoxItem.Selected += TranscribeTo;
+
+                ComboTranscription.Items.Add(comboBoxItem);
+            }
+
+            ComboTranscription.Text = "Select Language of your Video";
         }
 
         private void PopulateComboBoxWithTranslations()
         {
-            //foreach (var lang in Transcription.Language)
+            foreach (var lang in (Language[])Enum.GetValues(typeof(Language)))
+            {
+                var comboBoxItem = new ComboBoxItem() { Content = lang.ToString() };
+                comboBoxItem.Selected += TranslateTo;
+
+                ComboTranslation.Items.Add(comboBoxItem) ;
+            }
+
+            ComboTranslation.IsEnabled = true;
         }
 
         private void LoadVideoAndTranscript(string videoPath)
@@ -43,7 +66,7 @@ namespace VideoFunAppUI
 
             var audio = ffmpeg.ExtractAudio(video);
 
-            currentTranscript = new Transcript(audio, Transcript.Language.EnglishUS);
+            currentTranscript = new Transcript(audio, currentTranscriptLanguage);
 
             textBlock.Text = currentTranscript.TranscriptBulkText.Value;
 
@@ -81,7 +104,7 @@ namespace VideoFunAppUI
             mePlayer.Source = new Uri(newSource);
         }
 
-        private void changeTo(object sender, RoutedEventArgs e)
+        private void TranscribeTo(object sender, RoutedEventArgs e)
         {
             var selectedItem = (ComboBoxItem)sender;
 
@@ -90,10 +113,32 @@ namespace VideoFunAppUI
                 return;
             }
 
-            var selectedLanguage = selectedItem.Tag;
+            if (!Enum.TryParse((string)selectedItem.Content, out currentTranscriptLanguage))
+            {
+                throw new Exception("Unsuported language");
+            }
 
-            textBox.Text = (string)selectedLanguage;
-            textBlock.Text = (string)selectedLanguage;
+            VideoSelection.IsEnabled = true;
+        }
+
+        private void TranslateTo(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = (ComboBoxItem)sender;
+
+            if (selectedItem == null)
+            {
+                return;
+            }
+
+            if (!Enum.TryParse((string)selectedItem.Content, out Language lang))
+            {
+                throw new Exception("Unsuported language");
+            }
+
+            var translation = new TranslateText(currentTranscript, new Language[] { lang });
+
+            textBox.Text = translation.translations[0].Text;
+            textBlock.Text = textBox.Text;
         }
 
         private void SelectVideoButton_Click(object sender, RoutedEventArgs e)
@@ -113,11 +158,10 @@ namespace VideoFunAppUI
                 timer.Tick += timer_Tick;
                 timer.Start();
             }
-        }
 
-        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
+            btnPause.IsEnabled = true;
+            btnPlay.IsEnabled = true;
+            btnStop.IsEnabled = true;
         }
     }
 }
