@@ -162,7 +162,7 @@ namespace Transcription
             return languages[(int)language];
         }
 
-        private const string key_var = "40d19132f2224d82aa4fd3b947c11b80";
+        private static string key_var = SecretProvider.GetTranslationKey();
         //private static readonly string subscriptionKey = Environment.GetEnvironmentVariable(key_var);
 
         private const string endpoint_var = "https://api-eur.cognitive.microsofttranslator.com";

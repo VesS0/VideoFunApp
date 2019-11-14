@@ -85,7 +85,7 @@ namespace Transcription
             string speechLanguage = "en-us"
             )
         {
-            var config = SpeechConfig.FromSubscription("5d282cd785cf4cf6aacbd809fbdc7576", "francecentral");
+            var config = SpeechConfig.FromSubscription(SecretProvider.GetSubscriptionKey(), "francecentral");
 
             config.SpeechRecognitionLanguage = speechLanguage;
             switch (cogServiceOption)
