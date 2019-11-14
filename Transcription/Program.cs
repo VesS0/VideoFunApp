@@ -7,25 +7,18 @@ namespace Transcription
         static void Main(string[] args)
         {
             //Console.WriteLine("Hello World!");
-            //var pathToVideo = @"C:\Users\v-isbojo\Pictures\OtherLangVideo\itit.mp4";
+            var pathToVideo = @"C:\Users\v-isbojo\Pictures\OtherLangVideo\aa.mp4";
 
-            //var video = Video.ImportVideo(pathToVideo);
+            var video = Video.ImportVideo(pathToVideo);
 
-            //var audio = ffmpeg.ExtractAudio(video);
+            var audio = ffmpeg.ExtractAudio(video);
 
-            //CognitiveServices.GetTranscript(audio);
+            Transcript transcript = new Transcript(audio, Transcript.Language.EnglishUS);
 
-            try
-            {
-                TranslateText.TranslateTextRequest().Wait();
-            }
-            catch (Exception ex)
-            {
-                _ = ex;
-            }
+            TranslateText translate = new TranslateText(String.Join(" ", transcript.TranscriptLines));
+
             Console.WriteLine("Press any key to continue.");
             Console.ReadKey();
-            //var translation = CognitiveServices.GetTranslation(transcript, new[] { "en", "rs", "fr" });
         }
     }
 }

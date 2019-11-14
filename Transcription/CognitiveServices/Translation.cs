@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,7 +32,6 @@ namespace Transcription
     public class Translation
     {
         public string Text { get; set; }
-        public TextResult Transliteration { get; set; }
         public string To { get; set; }
         public Alignment Alignment { get; set; }
         public SentenceLength SentLen { get; set; }
@@ -48,74 +48,90 @@ namespace Transcription
         public int[] TransSentLen { get; set; }
     }
 
+    public enum Language
+    {
+        Afrikaans,
+        Arabic,
+        Bangla,
+        Bosnian,
+        Bulgarian,
+        CantoneseTraditional,
+        Catalan,
+        ChineseSimplified,
+        ChineseTraditional,
+        Croatian,
+        Czech,
+        Danish,
+        Dutch,
+        English,
+        Estonian,
+        Fijian,
+        Filipino,
+        Finnish,
+        French,
+        German,
+        Greek,
+        HaitianCreole,
+        Hebrew,
+        Hindi,
+        HmongDaw,
+        Hungarian,
+        Icelandic,
+        Indonesian,
+        Italian,
+        Japanese,
+        Kiswahili,
+        Klingon,
+        KlingonplqaD,
+        Korean,
+        Latvian,
+        Lithuanian,
+        Malagasy,
+        Malay,
+        Maltese,
+        Norwegian,
+        Persian,
+        Polish,
+        Portuguese,
+        QueretaroOtomi,
+        Romanian,
+        Russian,
+        Samoan,
+        SerbianCyrillic,
+        SerbianLatin,
+        Slovak,
+        Slovenian,
+        Spanish,
+        Swedish,
+        Tahitian,
+        Tamil,
+        Telugu,
+        Thai,
+        Tongan,
+        Turkish,
+        Ukrainian,
+        Urdu,
+        Vietnamese,
+        Welsh,
+        YucatecMaya
+    }
+
     public class TranslateText
     {
-        public enum Language
+        public List<Translation> translations = new List<Translation>();
+        private string textToBeTranslated = "";
+
+        public TranslateText(string text = "Hello, My name is Isidora")
         {
-            Afrikaans,
-            Arabic,
-            Bangla,
-            Bosnian,
-            Bulgarian,
-            CantoneseTraditional,
-            Catalan,
-            ChineseSimplified,
-            ChineseTraditional,
-            Croatian,
-            Czech,
-            Danish,
-            Dutch,
-            English,
-            Estonian,
-            Fijian,
-            Filipino,
-            Finnish,
-            French,
-            German,
-            Greek,
-            HaitianCreole,
-            Hebrew,
-            Hindi,
-            HmongDaw,
-            Hungarian,
-            Icelandic,
-            Indonesian,
-            Italian,
-            Japanese,
-            Kiswahili,
-            Klingon,
-            KlingonplqaD,
-            Korean,
-            Latvian,
-            Lithuanian,
-            Malagasy,
-            Malay,
-            Maltese,
-            Norwegian,
-            Persian,
-            Polish,
-            Portuguese,
-            QueretaroOtomi,
-            Romanian,
-            Russian,
-            Samoan,
-            SerbianCyrillic,
-            SerbianLatin,
-            Slovak,
-            Slovenian,
-            Spanish,
-            Swedish,
-            Tahitian,
-            Tamil,
-            Telugu,
-            Thai,
-            Tongan,
-            Turkish,
-            Ukrainian,
-            Urdu,
-            Vietnamese,
-            Welsh,
-            YucatecMaya
+            textToBeTranslated = text;
+            try
+            {
+                TranslateTextRequest().Wait();
+            }
+            catch(Exception ex)
+            {
+                _ = ex;
+            }
         }
 
         static string LanguageCode(Language language)
@@ -137,11 +153,21 @@ namespace Transcription
 
         // This sample requires C# 7.1 or later for async/await.
         // Async call to the Translator Text APIS
-        static public async Task TranslateTextRequest(
-            string route = "/translate?api-version=3.0&to=de&to=it&to=ja&to=th&to=sr-Latn", 
-            string inputText="Hello, My name is Isidora")
+        public async Task TranslateTextRequest(
+            string route = "/translate?api-version=3.0",
+            Language[] listOfLanguages = default(Language[]) )
         {
-            object[] body = new object[] { new { Text = inputText } };
+            if (listOfLanguages == default(Language[]))
+            {
+                listOfLanguages = new Language[] { Language.German, Language.Italian, Language.SerbianLatin };
+            }
+
+            foreach(Language lang in listOfLanguages)
+            {
+                route += "&to=" + LanguageCode(lang);
+            }
+
+            object[] body = new object[] { new { Text = textToBeTranslated } };
             var requestBody = JsonConvert.SerializeObject(body);
 
             using (var client = new HttpClient())
@@ -169,6 +195,7 @@ namespace Transcription
                     // Iterate over the results and print each translation.
                     foreach (Translation t in o.Translations)
                     {
+                        translations.Add(t);
                         Console.WriteLine("Translated to {0}: {1}", t.To, t.Text);
                     }
                 }
