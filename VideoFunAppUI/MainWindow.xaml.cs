@@ -29,6 +29,7 @@ namespace VideoFunAppUI
             InitializeComponent();
 
             LoadVideoAndTranscript(@"C:\Repos\video-1573565254.mp4");
+            PopulateComboBoxWithTranslations();
 
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
@@ -36,9 +37,14 @@ namespace VideoFunAppUI
             timer.Start();
         }
 
+        private void PopulateComboBoxWithTranslations()
+        {
+            //foreach (var lang in Transcription.Language)
+        }
+
         private void LoadVideoAndTranscript(string videoPath)
         {
-            var video = new Video();
+            var video = new Video(videoPath);
 
             mePlayer.Source = new Uri(video.Path);
 
