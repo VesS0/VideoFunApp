@@ -50,6 +50,85 @@ namespace Transcription
 
     public class TranslateText
     {
+        public enum Language
+        {
+            Afrikaans,
+            Arabic,
+            Bangla,
+            Bosnian,
+            Bulgarian,
+            CantoneseTraditional,
+            Catalan,
+            ChineseSimplified,
+            ChineseTraditional,
+            Croatian,
+            Czech,
+            Danish,
+            Dutch,
+            English,
+            Estonian,
+            Fijian,
+            Filipino,
+            Finnish,
+            French,
+            German,
+            Greek,
+            HaitianCreole,
+            Hebrew,
+            Hindi,
+            HmongDaw,
+            Hungarian,
+            Icelandic,
+            Indonesian,
+            Italian,
+            Japanese,
+            Kiswahili,
+            Klingon,
+            KlingonplqaD,
+            Korean,
+            Latvian,
+            Lithuanian,
+            Malagasy,
+            Malay,
+            Maltese,
+            Norwegian,
+            Persian,
+            Polish,
+            Portuguese,
+            QueretaroOtomi,
+            Romanian,
+            Russian,
+            Samoan,
+            SerbianCyrillic,
+            SerbianLatin,
+            Slovak,
+            Slovenian,
+            Spanish,
+            Swedish,
+            Tahitian,
+            Tamil,
+            Telugu,
+            Thai,
+            Tongan,
+            Turkish,
+            Ukrainian,
+            Urdu,
+            Vietnamese,
+            Welsh,
+            YucatecMaya
+        }
+
+        static string LanguageCode(Language language)
+        {
+            string[] languages = new string[]{ "af", "ar", "bn", "bs", "bg", "yue", "ca", "zh-Hans",
+                "zh-Hant", "hr", "cs", "da", "nl", "en", "et", "fj", "fil", "fi", "fr", "de", "el",
+                "ht", "he", "hi", "mww", "hu", "is","id", "it", "ja", "sw", "tlh", "tlh-Qaak", "ko",
+                "lv", "lt", "mg", "ms", "mt", "nb", "fa", "pl", "pt", "otq", "ro", "ru", "sm",
+                "sr-Cyrl", "sr-Latn", "sk", "sl", "es", "sv", "ty", "ta", "te", "th", "to", "tr",
+                "uk", "ur", "vi", "cy", "yua" };
+            return languages[(int)language];
+        }
+
         private const string key_var = "40d19132f2224d82aa4fd3b947c11b80";
         //private static readonly string subscriptionKey = Environment.GetEnvironmentVariable(key_var);
 

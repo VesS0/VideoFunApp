@@ -23,16 +23,61 @@ namespace Transcription
 
         public enum Language
         {
-            en = 0,
-            fr = 1,
+            ArabicEgypt,
+            ArabicSaudiArabia,
+            ArabicUAE,
+            ArabicKuwait,
+            ArabicQatar,
+            Catalan,
+            Danish,
+            German,
+            EnglishAustralia,
+            EnglishCanada,
+            EnglishUK,
+            EnglishIndia,
+            EnglishnewZeland,
+            EnglishUS,
+            SpanishSpain,
+            SpanishMexico,
+            Finnish,
+            French,
+            Gujarati,
+            Hindi,
+            Italian,
+            Japanese,
+            Korean,
+            Marathi,
+            Norwegian,
+            Dutch,
+            Polish,
+            PortugueseBrazil,
+            PortuguesePortugal,
+            Russian,
+            Swedish,
+            Tamil,
+            Telugu,
+            ChineseSimplified,
+            ChineseTraditional,
+            ChineseMandarin,
+            Thai,
+            Turkey
+        }
+
+    static string LanguageCode(Language language)
+        {
+            string[] languages = new string[]{ "ar-EG", "ar-SA", "ar-AE", "ar-KW", "ar-QA",
+                "ca-ES", "da-DK", "de-DE", "en-AU", "en-CA", "en-GB", "en-IN", "en-NZ",
+                "en-US", "es-ES", "es-MX", "fi-FI", "fr-CA", "fr-FR", "gu-IN", "hi-IN",
+                "it-IT", "ja-JP", "ko-KR", "mr-IN", "nb-NO", "nl-NL", "pl-PL", "pt-BR",
+                "pt-PT", "ru-RU", "sv-SE", "ta-IN", "te-IN", "zh-CN", "zh-HK", "zh-TW",
+                "th-TH", "tr-TR" };
+            return languages[(int)language];
         }
 
         public Transcript(Audio audio, Language lang)
         {
-            RecognizeSpeechAsync(audio.Path, "simple", languages[(int)lang]).Wait();
+            RecognizeSpeechAsync(audio.Path, "simple", LanguageCode(lang)).Wait();
         }
-
-        private static string[] languages = new string[] { "en-us", "fr-fr" };
 
         private async Task RecognizeSpeechAsync(
             string pathWav = @"C:\Users\v-isbojo\Pictures\OtherLangVideo\frfr_output.wav",
