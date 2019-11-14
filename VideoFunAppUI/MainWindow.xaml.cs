@@ -27,18 +27,24 @@ namespace VideoFunAppUI
         public MainWindow()
         {
             InitializeComponent();
-            var video = new Video(@"C:\Repos\video-1573565254.mp4");
 
-            mePlayer.Source = new Uri(video.Path);
+            LoadVideoAndTranscript(@"C:\Repos\video-1573565254.mp4");
 
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
             timer.Start();
+        }
+
+        private void LoadVideoAndTranscript(string videoPath)
+        {
+            var video = new Video();
+
+            mePlayer.Source = new Uri(video.Path);
 
             var audio = ffmpeg.ExtractAudio(video);
 
-            currentTranscript = new Transcript(audio, Transcript.Language.fr);
+            currentTranscript = new Transcript(audio, Transcript.Language.French);
 
             textBlock.Text = currentTranscript.TranscriptBulkText.Value;
 
