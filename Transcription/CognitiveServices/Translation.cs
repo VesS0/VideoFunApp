@@ -120,9 +120,17 @@ namespace Transcription
     {
         public List<Translation> translations = new List<Translation>();
         private string textToBeTranslated = "";
-
-        public TranslateText(string text = "Hello, My name is Isidora")
+        Language[] listOfLanguages;
+        public TranslateText(string text = "Hello, My name is Isidora", Language[] languages = default(Language[]))
         {
+            if (languages == default(Language[]))
+            {
+                listOfLanguages = new Language[] { Language.German, Language.Italian, Language.SerbianLatin };
+            }
+            else
+            {
+                listOfLanguages = languages;
+            }
             textToBeTranslated = text;
             try
             {
@@ -157,11 +165,6 @@ namespace Transcription
             string route = "/translate?api-version=3.0",
             Language[] listOfLanguages = default(Language[]) )
         {
-            if (listOfLanguages == default(Language[]))
-            {
-                listOfLanguages = new Language[] { Language.German, Language.Italian, Language.SerbianLatin };
-            }
-
             foreach(Language lang in listOfLanguages)
             {
                 route += "&to=" + LanguageCode(lang);
