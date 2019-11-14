@@ -9,13 +9,13 @@ namespace Transcription
 {
     public class Transcript
     {
-        public Lazy<string> TranscriptBulkText => new Lazy<string>(TranscriptLines.lines.Aggregate(AggregateTranscript));
+        public Lazy<string> TranscriptBulkText => new Lazy<string>(textStartDuration.text.Aggregate(AggregateTranscript));
 
-        public TranscriptLineInfos TranscriptLines { get; internal set; } = new TranscriptLineInfos();
+        public TextStartDuration textStartDuration { get; internal set; } = new TextStartDuration();
 
         public IEnumerable<string> GetNextLine()
         {
-            foreach (string line in TranscriptLines.lines)
+            foreach (string line in textStartDuration.text)
             {
                 yield return line;
             }
@@ -186,7 +186,7 @@ namespace Transcription
 
         private void AddLineInfo(TranscriptLineInfo info)
         {
-            TranscriptLines.AddTranscriptionLineInfo(info);
+            textStartDuration.AddTranscriptionLineInfo(info);
         }
 
         public class TranscriptLineInfo
@@ -194,26 +194,31 @@ namespace Transcription
             public TranscriptLineInfo(string line, long offset=0, TimeSpan duration = default(TimeSpan))
             {
                 this.line = line;
-                this.offset = offset;
-                this.durationinSeconds = duration;
+                this.offsetMilliseconds = offset/10000;
+                this.durationMilliseconds = duration.TotalMilliseconds;
             }
 
             public string line;
-            public long offset;
-            public TimeSpan durationinSeconds;
+            public long offsetMilliseconds;
+            public double durationMilliseconds;
         }
 
-        public class TranscriptLineInfos
+        public class TextStartDuration
         {
-            public List<string> lines = new List<string>();
-            public List<long> offsets = new List<long>();
-            public List<TimeSpan> duration = new List<TimeSpan>();
+            public List<string> text = new List<string>();
+            public List<long> start = new List<long>();
+            public List<double> duration = new List<double>();
 
             public void AddTranscriptionLineInfo(TranscriptLineInfo info)
             {
-                lines.Add(info.line);
-                offsets.Add(info.offset);
-                duration.Add(info.durationinSeconds);
+                text.Add(info.line);
+                start.Add(info.offsetMilliseconds);
+                duration.Add(info.durationMilliseconds);
+            }
+
+            public void AddTranslationlineInfo(TranslationText info)
+            {
+                //text.
             }
         }
     }

@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using static Transcription.Transcript;
 
 namespace Transcription
 {
@@ -132,7 +133,9 @@ namespace Transcription
             {
                 listOfLanguages = languages;
             }
+
             textToBeTranslated = transcript.TranscriptBulkText.Value;
+
             try
             {
                 TranslateTextRequest(listOfLanguages).Wait();
@@ -141,6 +144,11 @@ namespace Transcription
             {
                 _ = ex;
             }
+        }
+
+        public List<string> GetTranslatedLinesForLanguageIdx(int idx = 0)
+        {
+            return new List<string>(translations[idx].Text.Split(Environment.NewLine));
         }
 
         static string LanguageCode(Language language)

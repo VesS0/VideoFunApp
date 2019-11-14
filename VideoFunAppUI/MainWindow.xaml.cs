@@ -1,20 +1,12 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using Transcription;
+using static Transcription.Transcript;
 
 namespace VideoFunAppUI
 {
@@ -25,6 +17,11 @@ namespace VideoFunAppUI
     {
         Transcript currentTranscript;
         Transcript.Language currentTranscriptLanguage;
+        TextStartDuration textStartDuration;
+        int currentIndex = -1;
+
+        uint TextDelayInMilliseconds = 500;
+
 
         public MainWindow()
         {
@@ -70,7 +67,8 @@ namespace VideoFunAppUI
 
             textBlock.Text = currentTranscript.TranscriptBulkText.Value;
 
-            textBox.Text = textBlock.Text;
+            textStartDuration = currentTranscript.textStartDuration;
+            currentIndex = 0;
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -78,10 +76,34 @@ namespace VideoFunAppUI
             if (mePlayer.Source != null)
             {
                 if (mePlayer.NaturalDuration.HasTimeSpan)
+                {
                     lblStatus.Content = String.Format("{0} / {1}", mePlayer.Position.ToString(@"mm\:ss"), mePlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss"));
+
+                    if (currentIndex != -1 && textStartDuration.text.Count > currentIndex)
+                    {
+                        if (mePlayer.Position.TotalMilliseconds > textStartDuration.start[currentIndex] + textStartDuration.duration[currentIndex] + TextDelayInMilliseconds)
+                        {
+                            ++currentIndex;
+                        } 
+                        else
+                        {
+                            return;
+                        }
+                       
+                        if (currentIndex >= textStartDuration.text.Count)
+                        {
+                            return;
+                        }
+
+                        textBox.Text = textStartDuration.text[currentIndex];
+                    }
+                    
+                }
             }
             else
+            {
                 lblStatus.Content = "No file selected...";
+            }
         }
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)
@@ -97,6 +119,7 @@ namespace VideoFunAppUI
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
             mePlayer.Stop();
+            currentIndex = 0;
         }
 
         public void ChangeMediaElement(string newSource)
@@ -138,7 +161,9 @@ namespace VideoFunAppUI
             var translation = new Translation(currentTranscript, new Translation.Language[] { lang });
 
             textBox.Text = translation.translations[0].Text;
-            textBlock.Text = textBox.Text;
+            textStartDuration.text = translation.GetTranslatedLinesForLanguageIdx(0);
+            
+            textBlock.Text = "";
         }
 
         private void SelectVideoButton_Click(object sender, RoutedEventArgs e)
