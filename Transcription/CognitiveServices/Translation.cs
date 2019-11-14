@@ -14,7 +14,7 @@ namespace Transcription
     {
         public DetectedLanguage DetectedLanguage { get; set; }
         public TextResult SourceText { get; set; }
-        public Translation[] Translations { get; set; }
+        public TranslationText[] Translations { get; set; }
     }
 
     public class DetectedLanguage
@@ -29,7 +29,7 @@ namespace Transcription
         public string Script { get; set; }
     }
 
-    public class Translation
+    public class TranslationText
     {
         public string Text { get; set; }
         public string To { get; set; }
@@ -48,80 +48,80 @@ namespace Transcription
         public int[] TransSentLen { get; set; }
     }
 
-    public enum Language
+    public class Translation
     {
-        Afrikaans,
-        Arabic,
-        Bangla,
-        Bosnian,
-        Bulgarian,
-        CantoneseTraditional,
-        Catalan,
-        ChineseSimplified,
-        ChineseTraditional,
-        Croatian,
-        Czech,
-        Danish,
-        Dutch,
-        English,
-        Estonian,
-        Fijian,
-        Filipino,
-        Finnish,
-        French,
-        German,
-        Greek,
-        HaitianCreole,
-        Hebrew,
-        Hindi,
-        HmongDaw,
-        Hungarian,
-        Icelandic,
-        Indonesian,
-        Italian,
-        Japanese,
-        Kiswahili,
-        Klingon,
-        KlingonplqaD,
-        Korean,
-        Latvian,
-        Lithuanian,
-        Malagasy,
-        Malay,
-        Maltese,
-        Norwegian,
-        Persian,
-        Polish,
-        Portuguese,
-        QueretaroOtomi,
-        Romanian,
-        Russian,
-        Samoan,
-        SerbianCyrillic,
-        SerbianLatin,
-        Slovak,
-        Slovenian,
-        Spanish,
-        Swedish,
-        Tahitian,
-        Tamil,
-        Telugu,
-        Thai,
-        Tongan,
-        Turkish,
-        Ukrainian,
-        Urdu,
-        Vietnamese,
-        Welsh,
-        YucatecMaya
-    }
+        public enum Language
+        {
+            Afrikaans,
+            Arabic,
+            Bangla,
+            Bosnian,
+            Bulgarian,
+            CantoneseTraditional,
+            Catalan,
+            ChineseSimplified,
+            ChineseTraditional,
+            Croatian,
+            Czech,
+            Danish,
+            Dutch,
+            English,
+            Estonian,
+            Fijian,
+            Filipino,
+            Finnish,
+            French,
+            German,
+            Greek,
+            HaitianCreole,
+            Hebrew,
+            Hindi,
+            HmongDaw,
+            Hungarian,
+            Icelandic,
+            Indonesian,
+            Italian,
+            Japanese,
+            Kiswahili,
+            Klingon,
+            KlingonplqaD,
+            Korean,
+            Latvian,
+            Lithuanian,
+            Malagasy,
+            Malay,
+            Maltese,
+            Norwegian,
+            Persian,
+            Polish,
+            Portuguese,
+            QueretaroOtomi,
+            Romanian,
+            Russian,
+            Samoan,
+            SerbianCyrillic,
+            SerbianLatin,
+            Slovak,
+            Slovenian,
+            Spanish,
+            Swedish,
+            Tahitian,
+            Tamil,
+            Telugu,
+            Thai,
+            Tongan,
+            Turkish,
+            Ukrainian,
+            Urdu,
+            Vietnamese,
+            Welsh,
+            YucatecMaya
+        }
 
-    public class TranslateText
-    {
-        public List<Translation> translations = new List<Translation>();
+        public List<TranslationText> translations = new List<TranslationText>();
         private string textToBeTranslated = "";
         Language[] listOfLanguages;
-        public TranslateText(Transcript transcript, Language[] languages = default(Language[]))
+        public Translation(Transcript transcript, Language[] languages = default(Language[]))
         {
 
             if (languages == default(Language[]))
@@ -197,7 +197,7 @@ namespace Transcription
                     // Print the detected input language and confidence score.
                     Console.WriteLine("Detected input language: {0}\nConfidence score: {1}\n", o.DetectedLanguage.Language, o.DetectedLanguage.Score);
                     // Iterate over the results and print each translation.
-                    foreach (Translation t in o.Translations)
+                    foreach (TranslationText t in o.Translations)
                     {
                         translations.Add(t);
                         Console.WriteLine("Translated to {0}: {1}", t.To, t.Text);

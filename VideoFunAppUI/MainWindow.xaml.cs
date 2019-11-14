@@ -34,7 +34,7 @@ namespace VideoFunAppUI
 
         private void PopulateComboBoxWithTranscriptions()
         {
-            foreach (var lang in (Language[])Enum.GetValues(typeof(Transcript.Language)))
+            foreach (var lang in (Transcript.Language[])Enum.GetValues(typeof(Transcript.Language)))
             {
                 var comboBoxItem = new ComboBoxItem() { Content = lang.ToString() };
                 comboBoxItem.Selected += TranscribeTo;
@@ -47,7 +47,7 @@ namespace VideoFunAppUI
 
         private void PopulateComboBoxWithTranslations()
         {
-            foreach (var lang in (Language[])Enum.GetValues(typeof(Language)))
+            foreach (var lang in (Translation.Language[])Enum.GetValues(typeof(Translation.Language)))
             {
                 var comboBoxItem = new ComboBoxItem() { Content = lang.ToString() };
                 comboBoxItem.Selected += TranslateTo;
@@ -130,12 +130,12 @@ namespace VideoFunAppUI
                 return;
             }
 
-            if (!Enum.TryParse((string)selectedItem.Content, out Language lang))
+            if (!Enum.TryParse((string)selectedItem.Content, out Translation.Language lang))
             {
                 throw new Exception("Unsuported language");
             }
 
-            var translation = new TranslateText(currentTranscript, new Language[] { lang });
+            var translation = new Translation(currentTranscript, new Translation.Language[] { lang });
 
             textBox.Text = translation.translations[0].Text;
             textBlock.Text = textBox.Text;
