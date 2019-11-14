@@ -28,7 +28,7 @@
             <ComboBoxItem Content="France" Tag="fr" Selected="changeTo"/>
         </ComboBox>
         <TextBox HorizontalAlignment="Left" Margin="608,109,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Height="257" Width="160" Name="textBlock" RenderTransformOrigin="0.51,0.477"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="63"/>
-        <TextBox HorizontalAlignment="Left" Margin="116,10,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="436" Height="25" Name="textBox" />
+        <Button Content="Select Video" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="SelectVideoButton_Click"/>
+        <TextBox HorizontalAlignment="Left" Margin="116,10,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="436" Height="25" Name="textBox" TextChanged="textBox_TextChanged" />
     </Grid>
 </Window>

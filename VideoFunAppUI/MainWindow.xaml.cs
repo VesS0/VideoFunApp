@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,14 +28,6 @@ namespace VideoFunAppUI
         public MainWindow()
         {
             InitializeComponent();
-
-            LoadVideoAndTranscript(@"C:\Repos\video-1573565254.mp4");
-            PopulateComboBoxWithTranslations();
-
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += timer_Tick;
-            timer.Start();
         }
 
         private void PopulateComboBoxWithTranslations()
@@ -50,7 +43,7 @@ namespace VideoFunAppUI
 
             var audio = ffmpeg.ExtractAudio(video);
 
-            currentTranscript = new Transcript(audio, Transcript.Language.French);
+            currentTranscript = new Transcript(audio, Transcript.Language.EnglishUS);
 
             textBlock.Text = currentTranscript.TranscriptBulkText.Value;
 
@@ -101,6 +94,30 @@ namespace VideoFunAppUI
 
             textBox.Text = (string)selectedLanguage;
             textBlock.Text = (string)selectedLanguage;
+        }
+
+        private void SelectVideoButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            if(openFileDialog.ShowDialog() == true)
+            {
+                textBox.Text = openFileDialog.FileName;
+                textBox.IsEnabled = false;
+
+                LoadVideoAndTranscript(openFileDialog.FileName);
+                PopulateComboBoxWithTranslations();
+
+                DispatcherTimer timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromSeconds(1);
+                timer.Tick += timer_Tick;
+                timer.Start();
+            }
+        }
+
+        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
