@@ -34,7 +34,7 @@ namespace VideoFunAppUI
 
         private void PopulateComboBoxWithTranscriptions()
         {
-            foreach (var lang in (Language[])Enum.GetValues(typeof(Transcription.Language)))
+            foreach (var lang in (Language[])Enum.GetValues(typeof(Transcript.Language)))
             {
                 var comboBoxItem = new ComboBoxItem() { Content = lang.ToString() };
                 comboBoxItem.Selected += TranscribeTo;
