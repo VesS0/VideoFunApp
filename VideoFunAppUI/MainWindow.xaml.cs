@@ -102,8 +102,8 @@ namespace VideoFunAppUI
 
             if(openFileDialog.ShowDialog() == true)
             {
-                textBox.Text = openFileDialog.FileName;
-                textBox.IsEnabled = false;
+                tbvideoname.Text = openFileDialog.FileName;
+                tbvideoname.IsEnabled = false;
 
                 LoadVideoAndTranscript(openFileDialog.FileName);
                 PopulateComboBoxWithTranslations();

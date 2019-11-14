@@ -21,7 +21,7 @@
             </WrapPanel>
         </StackPanel>
         <StackPanel Margin="620,351,5,34"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,449,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="760" Height="49" RenderTransformOrigin="0.499,0.227" x:Name="textBox_Copy"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,449,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="760" Height="49" RenderTransformOrigin="0.499,0.227" Name="textBox"/>
         <ComboBox Margin="605,384,10,69" x:Name="Combo_Copy1">
             <ComboBoxItem Content="English" Tag="en" Selected="changeTo"/>
             <ComboBoxItem Content="bb" Tag="bb"  Selected="changeTo"/>
@@ -29,6 +29,6 @@
         </ComboBox>
         <TextBox HorizontalAlignment="Left" Margin="608,109,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Height="257" Width="160" Name="textBlock" RenderTransformOrigin="0.51,0.477"/>
         <Button Content="Select Video" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="SelectVideoButton_Click"/>
-        <TextBox HorizontalAlignment="Left" Margin="116,10,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="436" Height="25" Name="textBox" TextChanged="textBox_TextChanged" />
+        <TextBox HorizontalAlignment="Left" Margin="116,10,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="436" Height="25" Name="tbvideoname" TextChanged="textBox_TextChanged" />
     </Grid>
 </Window>
