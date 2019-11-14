@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CognitiveServices.Speech;
@@ -6,16 +7,41 @@ using Microsoft.CognitiveServices.Speech.Audio;
 
 namespace Transcription
 {
-    class Transcript
+    public class Transcript
     {
-        public static async Task RecognizeSpeechAsync(
+        public Lazy<string> TranscriptBulkText => new Lazy<string>(TranscriptLines.Aggregate(AggregateTranscript));
+
+        public List<string> TranscriptLines { get; set; } = new List<string>();
+
+        public IEnumerable<string> GetNextLine()
+        {
+            foreach (string line in TranscriptLines)
+            {
+                yield return line;
+            }
+        }
+
+        public enum Language
+        {
+            en = 0,
+            fr = 1,
+        }
+
+        public Transcript(Audio audio, Language lang)
+        {
+            RecognizeSpeechAsync(audio.Path, "simple", languages[(int)lang]).Wait();
+        }
+
+        private static string[] languages = new string[] { "en-us", "fr-fr" };
+
+        private async Task RecognizeSpeechAsync(
             string pathWav = @"C:\Users\v-isbojo\Pictures\OtherLangVideo\frfr_output.wav",
             string cogServiceOption = "simple",
             string speechLanguage = "en-us"
             )
         {
             var config = SpeechConfig.FromSubscription("5d282cd785cf4cf6aacbd809fbdc7576", "francecentral");
-            string transcript = "";
+
             config.SpeechRecognitionLanguage = speechLanguage;
             switch (cogServiceOption)
             {
@@ -50,11 +76,11 @@ namespace Transcription
                                 case "simple":
                                 case "detailedtext":
                                     Console.WriteLine($"RECOGNIZED: Text={e.Result.Text}");
-                                    transcript += e.Result.Text + System.Environment.NewLine;
+                                    AddLine(e.Result.Text);
                                     break;
                                 case "detailedbest":
                                     Console.WriteLine($"RECOGNIZED: Text={e.Result.Best().FirstOrDefault()?.Text}");
-                                    transcript += e.Result.Best().FirstOrDefault()?.Text + System.Environment.NewLine;
+                                    AddLine(e.Result.Best().FirstOrDefault()?.Text);
                                     break;
                                 default:
                                     throw new ArgumentException();
@@ -104,7 +130,17 @@ namespace Transcription
 
             string pathTranscript = pathWav.Substring(0, pathWav.Length - 3) + "txt";
 
-            System.IO.File.WriteAllText(pathTranscript, transcript);
+            System.IO.File.WriteAllText(pathTranscript, TranscriptBulkText.Value);
+        }
+
+        private static string AggregateTranscript(string aggregated, string newLine)
+        {
+            return aggregated + Environment.NewLine + newLine;
+        }
+
+        private void AddLine(string line)
+        {
+            TranscriptLines.Add(line);
         }
     }
 }

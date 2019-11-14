@@ -11,7 +11,6 @@ namespace Transcription
         {
             try
             {
-                Transcript.RecognizeSpeechAsync(audio.Path, "simple", "it-it").Wait();
             }
             catch(Exception ex)
             {

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Transcription;
 
 namespace VideoFunAppUI
 {
@@ -21,24 +22,27 @@ namespace VideoFunAppUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        Transcript currentTranscript;
+
         public MainWindow()
         {
             InitializeComponent();
+            var video = new Video(@"C:\Repos\video-1573565254.mp4");
+
+            mePlayer.Source = new Uri(video.Path);
 
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
             timer.Start();
-            textBlock.Text = "Ajajaj puertoriko newline \r\n new line Ajajaj puertorikoAjajaj puertoriko" +
-                "\r\n new line Ajajaj puertorikoAjajaj puertoriko" +
-                "\r\n new line Ajajaj puertorikoAjajaj puertoriko" +
-                "\r\n new line Ajajaj puertorikoAjajaj puertoriko" +
-                "v" +
-                "\r\n new line Ajajaj puertorikoAjajaj puertoriko" +
-                "\r\n new line Ajajaj puertorikoAjajaj puertoriko" +
-                "\r\n new line Ajajaj puertorikoAjajaj puertoriko";
 
-            textBox.Text = "aPSAl pals okaso kwep lfwpl \r\n dpslokods okds okdsod ";
+            var audio = ffmpeg.ExtractAudio(video);
+
+            currentTranscript = new Transcript(audio, Transcript.Language.fr);
+
+            textBlock.Text = currentTranscript.TranscriptBulkText.Value;
+
+            textBox.Text = textBlock.Text;
         }
 
         void timer_Tick(object sender, EventArgs e)
