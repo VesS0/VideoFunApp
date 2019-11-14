@@ -18,11 +18,6 @@ namespace Transcription
             }
         }
 
-        public static Translation GetTranslation(Transcript trans, string[] languages)
-        {
-            return new Translation();
-        }
-
         private static void PingCognitiveServices()
         {
 
