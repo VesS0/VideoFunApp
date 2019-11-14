@@ -9,13 +9,13 @@ namespace Transcription
 {
     public class Transcript
     {
-        public Lazy<string> TranscriptBulkText => new Lazy<string>(TranscriptLines.Aggregate(AggregateTranscript));
+        public Lazy<string> TranscriptBulkText => new Lazy<string>(TranscriptLines.lines.Aggregate(AggregateTranscript));
 
-        public List<string> TranscriptLines { get; set; } = new List<string>();
+        public TranscriptLineInfos TranscriptLines { get; internal set; } = new TranscriptLineInfos();
 
         public IEnumerable<string> GetNextLine()
         {
-            foreach (string line in TranscriptLines)
+            foreach (string line in TranscriptLines.lines)
             {
                 yield return line;
             }
@@ -76,7 +76,7 @@ namespace Transcription
 
         public Transcript(Audio audio, Language lang)
         {
-            RecognizeSpeechAsync(audio.Path, "simple", LanguageCode(lang)).Wait();
+            RecognizeSpeechAsync(audio.Path, "detailedbest", LanguageCode(lang)).Wait();
         }
 
         private async Task RecognizeSpeechAsync(
@@ -121,11 +121,12 @@ namespace Transcription
                                 case "simple":
                                 case "detailedtext":
                                     Console.WriteLine($"RECOGNIZED: Text={e.Result.Text}");
-                                    AddLine(e.Result.Text);
+                                    AddLineInfo(new TranscriptLineInfo(e.Result.Text, e.Result.OffsetInTicks, e.Result.Duration));
                                     break;
                                 case "detailedbest":
                                     Console.WriteLine($"RECOGNIZED: Text={e.Result.Best().FirstOrDefault()?.Text}");
-                                    AddLine(e.Result.Best().FirstOrDefault()?.Text);
+                                    
+                                    AddLineInfo(new TranscriptLineInfo(e.Result.Best().FirstOrDefault()?.Text, e.Result.OffsetInTicks, e.Result.Duration));
                                     break;
                                 default:
                                     throw new ArgumentException();
@@ -183,9 +184,37 @@ namespace Transcription
             return aggregated + Environment.NewLine + newLine;
         }
 
-        private void AddLine(string line)
+        private void AddLineInfo(TranscriptLineInfo info)
         {
-            TranscriptLines.Add(line);
+            TranscriptLines.AddTranscriptionLineInfo(info);
+        }
+
+        public class TranscriptLineInfo
+        {
+            public TranscriptLineInfo(string line, long offset=0, TimeSpan duration = default(TimeSpan))
+            {
+                this.line = line;
+                this.offset = offset;
+                this.durationinSeconds = duration;
+            }
+
+            public string line;
+            public long offset;
+            public TimeSpan durationinSeconds;
+        }
+
+        public class TranscriptLineInfos
+        {
+            public List<string> lines = new List<string>();
+            public List<long> offsets = new List<long>();
+            public List<TimeSpan> duration = new List<TimeSpan>();
+
+            public void AddTranscriptionLineInfo(TranscriptLineInfo info)
+            {
+                lines.Add(info.line);
+                offsets.Add(info.offset);
+                duration.Add(info.durationinSeconds);
+            }
         }
     }
 }
