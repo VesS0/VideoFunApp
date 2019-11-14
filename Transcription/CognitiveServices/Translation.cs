@@ -135,7 +135,7 @@ namespace Transcription
             textToBeTranslated = transcript.TranscriptBulkText.Value;
             try
             {
-                TranslateTextRequest().Wait();
+                TranslateTextRequest(listOfLanguages).Wait();
             }
             catch(Exception ex)
             {
@@ -163,8 +163,8 @@ namespace Transcription
         // This sample requires C# 7.1 or later for async/await.
         // Async call to the Translator Text APIS
         public async Task TranslateTextRequest(
-            string route = "/translate?api-version=3.0",
-            Language[] listOfLanguages = default(Language[]) )
+            Language[] listOfLanguages = default(Language[]) ,
+            string route = "/translate?api-version=3.0")
         {
             foreach(Language lang in listOfLanguages)
             {
