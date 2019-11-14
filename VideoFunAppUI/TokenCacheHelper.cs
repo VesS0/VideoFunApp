@@ -30,7 +30,7 @@ using System.IO;
 using System.Security.Cryptography;
 using Microsoft.Identity.Client;
 
-namespace active_directory_wpf_msgraph_v2
+namespace VideoFunAppUI
 {
     static class TokenCacheHelper
     {

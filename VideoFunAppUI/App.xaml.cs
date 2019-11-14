@@ -5,7 +5,6 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using active_directory_wpf_msgraph_v2;
 using Microsoft.Identity.Client;
 
 namespace VideoFunAppUI
