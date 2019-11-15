@@ -57,12 +57,12 @@ namespace Transcription
             var context = new AuthenticationContext(authority, TokenCache.DefaultShared);
 
             // Naredne dve linije koda mogu biti problem bez certa, njih zakomentarisati i odkomentarisati 2 linije ispod u slucaju toga
-            IClientAssertionCertificate cert = new ClientAssertionCertificate(applicationId, GetCertificateWithSubjectFromStore());
-            var result = await context.AcquireTokenAsync(resource, cert);
+            //IClientAssertionCertificate cert = new ClientAssertionCertificate(applicationId, GetCertificateWithSubjectFromStore());
+            //var result = await context.AcquireTokenAsync(resource, cert);
 
             // U slucaju problema sa certovima odkomentarisati sledece dve linije koda
-            //var appCredentials = new ClientCredential("473fb467-aa96-4e5f-b70c-1e4296483756", "?I[]cTVYjnOR6x3OcI_Yd4EmVzt9KrL7");
-            //var result = await context.AcquireTokenAsync(resource, appCredentials);
+            var appCredentials = new ClientCredential("473fb467-aa96-4e5f-b70c-1e4296483756", "?I[]cTVYjnOR6x3OcI_Yd4EmVzt9KrL7");
+            var result = await context.AcquireTokenAsync(resource, appCredentials);
 
             return result.AccessToken;
         }
