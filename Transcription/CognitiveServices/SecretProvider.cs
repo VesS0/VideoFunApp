@@ -19,12 +19,12 @@ namespace Transcription
 
         public static string GetSubscriptionKey()
         {
-            return GetSecretFromSecretIdentifier(subscriptionKeySecretIdentifier);
+            return "5d282cd785cf4cf6aacbd809fbdc7576";//  GetSecretFromSecretIdentifier(subscriptionKeySecretIdentifier);
         }
 
         public static string GetTranslationKey()
         {
-            return GetSecretFromSecretIdentifier(translationkeySecretIdentifier);
+            return "40d19132f2224d82aa4fd3b947c11b80";// GetSecretFromSecretIdentifier(translationkeySecretIdentifier);
         }
 
         private static string GetSecretFromSecretIdentifier(string secretIdentifier)
@@ -57,12 +57,12 @@ namespace Transcription
             var context = new AuthenticationContext(authority, TokenCache.DefaultShared);
 
             // Naredne dve linije koda mogu biti problem bez certa, njih zakomentarisati i odkomentarisati 2 linije ispod u slucaju toga
-            //IClientAssertionCertificate cert = new ClientAssertionCertificate(applicationId, GetCertificateWithSubjectFromStore());
-            //var result = await context.AcquireTokenAsync(resource, cert);
+            IClientAssertionCertificate cert = new ClientAssertionCertificate(applicationId, GetCertificateWithSubjectFromStore());
+            var result = await context.AcquireTokenAsync(resource, cert);
 
             // U slucaju problema sa certovima odkomentarisati sledece dve linije koda
-            var appCredentials = new ClientCredential("473fb467-aa96-4e5f-b70c-1e4296483756", "?I[]cTVYjnOR6x3OcI_Yd4EmVzt9KrL7");
-            var result = await context.AcquireTokenAsync(resource, appCredentials);
+            //var appCredentials = new ClientCredential("473fb467-aa96-4e5f-b70c-1e4296483756", "?I[]cTVYjnOR6x3OcI_Yd4EmVzt9KrL7");
+            //var result = await context.AcquireTokenAsync(resource, appCredentials);
 
             return result.AccessToken;
         }
