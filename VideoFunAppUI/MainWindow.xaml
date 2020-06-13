@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VideoFunAppUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="MainWindow" Height="600" Width="1200">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <MediaElement Source="C:\Repos\video-1573565254.mp4" LoadedBehavior="Manual" Name="mePlayer" Margin="5,46,180,15" />
+        <MediaElement Source="C:\Repos\video-1573565254.mp4" LoadedBehavior="Manual" Name="mePlayer" Margin="5,46,601,70" />
         <StackPanel Grid.Row="1">
             <Label Name="lblStatus" Content="Not playing..." HorizontalContentAlignment="Center" Margin="5" />
             <WrapPanel HorizontalAlignment="Center">
@@ -21,11 +21,13 @@
             </WrapPanel>
         </StackPanel>
         <StackPanel Margin="620,351,5,34"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,449,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="760" Height="49" RenderTransformOrigin="0.499,0.227" Name="textBox"/>
-        <ComboBox IsEnabled="False" Margin="605,384,10,69" Name="ComboTranslation"/>
+        <TextBox HorizontalAlignment="Left" Margin="10,435,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="542" Height="68" RenderTransformOrigin="0.499,0.227" Name="textBox"/>
+        <ComboBox IsEnabled="False" Margin="606,380,41,74" Name="ComboTranslation"/>
         <TextBox HorizontalAlignment="Left" Margin="608,109,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Height="257" Width="160" Name="textBlock" RenderTransformOrigin="0.51,0.477"/>
-        <Button Name="VideoSelection" IsEnabled="False" Content="Select Video" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="SelectVideoButton_Click"/>
+        <TextBox HorizontalAlignment="Left" Margin="794,109,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Height="257" Width="160" x:Name="textBlock_Translate" RenderTransformOrigin="0.51,0.477"/>
+        <TextBox HorizontalAlignment="Left" Margin="979,109,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Height="257" Width="160" x:Name="textBlock_Analytics" RenderTransformOrigin="0.51,0.477"/>
+        <Button Name="VideoSelection" Content="Select Video" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="101" Click="SelectVideoButton_Click"/>
         <TextBox HorizontalAlignment="Left" Margin="116,10,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="436" Height="25" Name="tbvideoname" />
-        <ComboBox Margin="606,12,10,449" Name="ComboTranscription"/>
+        <ComboBox Margin="606,12,10,441" Name="ComboTranscription"/>
     </Grid>
 </Window>

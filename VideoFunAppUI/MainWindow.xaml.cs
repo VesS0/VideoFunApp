@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Azure.AI.TextAnalytics;
+using Microsoft.Win32;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,11 +34,14 @@ namespace VideoFunAppUI
             {
                 var comboBoxItem = new ComboBoxItem() { Content = lang.ToString() };
                 comboBoxItem.Selected += TranscribeTo;
-
+                if(lang == Transcript.Language.EnglishUK)
+                {
+                    comboBoxItem.IsSelected = true;
+                }
                 ComboTranscription.Items.Add(comboBoxItem);
             }
 
-            ComboTranscription.Text = "Select Language of your Video";
+            ComboTranscription.SelectedIndex = 10;
         }
 
         private void PopulateComboBoxWithTranslations()
@@ -64,6 +68,7 @@ namespace VideoFunAppUI
             currentTranscript = new Transcript(audio, currentTranscriptLanguage);
 
             textBlock.Text = currentTranscript.TranscriptBulkText.Value;
+            textBlock_Analytics.Text = new TextAnalytics().EntityLinkingExample(currentTranscript.TranscriptBulkText.Value);
 
             textStartDuration = currentTranscript.textStartDuration;
             currentIndex = 0;
@@ -158,10 +163,10 @@ namespace VideoFunAppUI
 
             var translation = new Translation(currentTranscript, new Translation.Language[] { lang });
 
-            textBox.Text = translation.translations[0].Text;
+            textBlock_Translate.Text = translation.translations[0].Text;
             textStartDuration.text = translation.GetTranslatedLinesForLanguageIdx(0);
             
-            textBlock.Text = "";
+            //textBlock.Text = "";
         }
 
         private void SelectVideoButton_Click(object sender, RoutedEventArgs e)
@@ -182,6 +187,7 @@ namespace VideoFunAppUI
                 timer.Start();
             }
 
+            mePlayer.Play();
             btnPause.IsEnabled = true;
             btnPlay.IsEnabled = true;
             btnStop.IsEnabled = true;

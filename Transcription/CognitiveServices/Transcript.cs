@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CognitiveServices.Speech;
@@ -77,6 +78,11 @@ namespace Transcription
         public Transcript(Audio audio, Language lang)
         {
             RecognizeSpeechAsync(audio.Path, "detailedbest", LanguageCode(lang)).Wait();
+        }
+
+        public Transcript(Audio audio, string lang)
+        {
+            RecognizeSpeechAsync(audio.Path, "detailedbest", lang).Wait();
         }
 
         private async Task RecognizeSpeechAsync(
@@ -174,9 +180,9 @@ namespace Transcription
                 }
             }
 
-            string pathTranscript = pathWav.Substring(0, pathWav.Length - 3) + "txt";
+            //string pathTranscript = pathWav.Substring(0, pathWav.Length - 3) + "txt";
 
-            System.IO.File.WriteAllText(pathTranscript, TranscriptBulkText.Value);
+            System.IO.File.WriteAllText("E:\\diplomskiTesting\\tempfolder\\" + Path.GetFileNameWithoutExtension(pathWav) + ".txt", TranscriptBulkText.Value);
         }
 
         private static string AggregateTranscript(string aggregated, string newLine)
