@@ -182,7 +182,7 @@ namespace Transcription
 
             //string pathTranscript = pathWav.Substring(0, pathWav.Length - 3) + "txt";
 
-            System.IO.File.WriteAllText("E:\\diplomskiTesting\\tempfolder\\" + Path.GetFileNameWithoutExtension(pathWav) + ".txt", TranscriptBulkText.Value);
+            System.IO.File.WriteAllText(Path.Combine(Path.GetDirectoryName(pathWav), Path.GetFileNameWithoutExtension(pathWav)) + ".txt", TranscriptBulkText.Value);
         }
 
         private static string AggregateTranscript(string aggregated, string newLine)

@@ -11,7 +11,7 @@ namespace Transcription
         public static Audio ExtractAudio(Video video)
         {
             string extension = Path.GetExtension(video.Path);
-            string audioNoext = "E:\\diplomskiTesting\\tempfolder\\" + Path.GetFileName(video.Path);
+            string audioNoext = Path.Combine(Path.GetDirectoryName(video.Path), Path.GetFileNameWithoutExtension(video.Path));
 
             var audio = new Audio(audioNoext + ".wav");
 
