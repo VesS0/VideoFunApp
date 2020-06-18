@@ -1,8 +1,8 @@
 using System;
 using System.IO;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Transcription;
+using Transcription.Tools;
 
 namespace VideoFunAppTests
 {
@@ -47,7 +47,9 @@ namespace VideoFunAppTests
         [TestMethod]
         public void FfmpegAudioExtraction_FileDoesNotExist()
         {
-            var video = new Video(@"./TestResources/doesNotExist.mp4");
+            const string nonExistingVideoPath = @"./TestResources/doesNotExist.mp4";
+
+            var video = new Video(nonExistingVideoPath);
             var audio = ffmpeg.ExtractAudio(video);
 
             Assert.IsFalse(File.Exists(audio.Path));
@@ -57,7 +59,9 @@ namespace VideoFunAppTests
         [ExpectedException(typeof(UriFormatException))]
         public void SecretProvider_InvalidSecret()
         {
-            var secretProvider = new SecretProvider("invalid", "invalid", applicationId);
+            const string invalidKey = "invalid";
+
+            var secretProvider = new SecretProvider(invalidKey, invalidKey, applicationId);
 
             var secret = secretProvider.GetSubscriptionKey();
         }
@@ -66,7 +70,9 @@ namespace VideoFunAppTests
         [ExpectedException(typeof(Microsoft.IdentityModel.Clients.ActiveDirectory.AdalServiceException))]
         public void SecretProvider_ValidSecretInvalidAppId()
         {
-            var secretProvider = new SecretProvider(translationkeySecretIdentifier, subscriptionKeySecretIdentifier, "invalid");
+            const string invalidKey = "invalid";
+
+            var secretProvider = new SecretProvider(translationkeySecretIdentifier, subscriptionKeySecretIdentifier, invalidKey);
 
             var secret = secretProvider.GetTranslationKey();
         }

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Transcription.Tools;
 
 namespace Transcription
 {
-    public class Audio
+    public class Audio: Media
     {
         public string Path { get; set; }
         
