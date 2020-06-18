@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Transcription;
-using Transcription.Tools;
 
 namespace VideoFunAppTests
 {
