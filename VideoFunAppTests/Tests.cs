@@ -36,7 +36,7 @@ namespace VideoFunAppTests
         }
 
         [TestMethod]
-        public void ffmpegValidTest()
+        public void FfmpegAudioExtraction_AudioExists()
         {
             var video = new Video(testVideoPath);
             var audio = ffmpeg.ExtractAudio(video);
@@ -45,7 +45,7 @@ namespace VideoFunAppTests
         }
 
         [TestMethod]
-        public void FileDoesNotExist()
+        public void FfmpegAudioExtraction_FileDoesNotExist()
         {
             var video = new Video(@"./TestResources/doesNotExist.mp4");
             var audio = ffmpeg.ExtractAudio(video);
@@ -55,7 +55,7 @@ namespace VideoFunAppTests
 
         [TestMethod]
         [ExpectedException(typeof(UriFormatException))]
-        public void SecretProviderInvalidSecret()
+        public void SecretProvider_InvalidSecret()
         {
             var secretProvider = new SecretProvider("invalid", "invalid", applicationId);
 
@@ -64,7 +64,7 @@ namespace VideoFunAppTests
 
         [TestMethod]
         [ExpectedException(typeof(Microsoft.IdentityModel.Clients.ActiveDirectory.AdalServiceException))]
-        public void SecretProviderValidSecretInvalidAppId()
+        public void SecretProvider_ValidSecretInvalidAppId()
         {
             var secretProvider = new SecretProvider(translationkeySecretIdentifier, subscriptionKeySecretIdentifier, "invalid");
 
@@ -72,7 +72,7 @@ namespace VideoFunAppTests
         }
 
         [TestMethod]
-        public void SecretProviderSuccessfulWorkflow()
+        public void SecretProvider_ValidParameters()
         {
             var secretProvider = new SecretProvider(translationkeySecretIdentifier, subscriptionKeySecretIdentifier, applicationId);
 
