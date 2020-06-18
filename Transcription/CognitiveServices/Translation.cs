@@ -122,7 +122,7 @@ namespace Transcription
         public List<TranslationText> translations = new List<TranslationText>();
         private string textToBeTranslated = "";
         Language[] listOfLanguages;
-        public Translation(Transcript transcript, Language[] languages = default(Language[]))
+        public Translation(SecretProvider secretProvider, Transcript transcript, Language[] languages = default(Language[]))
         {
 
             if (languages == default(Language[]))
@@ -138,7 +138,7 @@ namespace Transcription
 
             try
             {
-                TranslateTextRequest(listOfLanguages).Wait();
+                TranslateTextRequest(secretProvider, listOfLanguages).Wait();
             }
             catch(Exception ex)
             {
@@ -162,7 +162,6 @@ namespace Transcription
             return languages[(int)language];
         }
 
-        private static string key_var = SecretProvider.GetTranslationKey();
         //private static readonly string subscriptionKey = Environment.GetEnvironmentVariable(key_var);
 
         private const string endpoint_var = "https://api-eur.cognitive.microsofttranslator.com";
@@ -171,6 +170,7 @@ namespace Transcription
         // This sample requires C# 7.1 or later for async/await.
         // Async call to the Translator Text APIS
         public async Task TranslateTextRequest(
+            SecretProvider secretProvider,
             Language[] listOfLanguages = default(Language[]) ,
             string route = "/translate?api-version=3.0")
         {
@@ -191,7 +191,7 @@ namespace Transcription
                 // Construct the URI and add headers.
                 request.RequestUri = new Uri(endpoint_var + route);
                 request.Content = new StringContent(requestBody, Encoding.UTF8, "application/json");
-                request.Headers.Add("Ocp-Apim-Subscription-Key", key_var);
+                request.Headers.Add("Ocp-Apim-Subscription-Key", secretProvider.GetTranslationKey());
 
                 // Send the request and get response.
                 HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);

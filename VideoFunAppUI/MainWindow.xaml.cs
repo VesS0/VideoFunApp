@@ -1,4 +1,4 @@
-﻿using Azure.AI.TextAnalytics;
+﻿
 using Microsoft.Win32;
 using System;
 using System.Windows;
@@ -15,22 +15,28 @@ namespace VideoFunAppUI
     public partial class MainWindow : Window
     {
         Transcript currentTranscript;
-        Transcript.Language currentTranscriptLanguage;
+        Language currentTranscriptLanguage;
         TextStartDuration textStartDuration;
         int currentIndex = -1;
 
         uint TextDelayInMilliseconds = 500;
 
+        private const string translationkeySecretIdentifier = "https://francevideofunappsecr.vault.azure.net/secrets/TranslationKey/d32fce40406c490194ebd9a6ff868096";
+        private const string subscriptionKeySecretIdentifier = "https://francevideofunappsecr.vault.azure.net/secrets/SubscriptionKey/6e0295187d9d416caa73167391bfe3be";
+        private const string applicationId = "473fb467-aa96-4e5f-b70c-1e4296483756";
+
+        private SecretProvider secretProvider;
 
         public MainWindow()
         {
             InitializeComponent();
             PopulateComboBoxWithTranscriptions();
+            secretProvider = new SecretProvider(translationkeySecretIdentifier, subscriptionKeySecretIdentifier, applicationId);
         }
 
         private void PopulateComboBoxWithTranscriptions()
         {
-            foreach (var lang in (Transcript.Language[])Enum.GetValues(typeof(Transcript.Language)))
+            foreach (var lang in (Language[])Enum.GetValues(typeof(Language)))
             {
                 var comboBoxItem = new ComboBoxItem() { Content = lang.ToString() };
                 comboBoxItem.Selected += TranscribeTo;
@@ -65,7 +71,7 @@ namespace VideoFunAppUI
 
             var audio = ffmpeg.ExtractAudio(video);
 
-            currentTranscript = new Transcript(audio, currentTranscriptLanguage);
+            currentTranscript = new Transcript(secretProvider, audio, currentTranscriptLanguage);
 
             textBlock.Text = currentTranscript.TranscriptBulkText.Value;
             textBlock_Analytics.Text = new TextAnalytics().EntityLinkingExample(currentTranscript.TranscriptBulkText.Value);
@@ -161,7 +167,7 @@ namespace VideoFunAppUI
                 throw new Exception("Unsuported language");
             }
 
-            var translation = new Translation(currentTranscript, new Translation.Language[] { lang });
+            var translation = new Translation(secretProvider, currentTranscript, new Translation.Language[] { lang });
 
             textBlock_Translate.Text = translation.translations[0].Text;
             textStartDuration.text = translation.GetTranslatedLinesForLanguageIdx(0);

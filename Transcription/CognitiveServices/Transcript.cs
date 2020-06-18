@@ -75,23 +75,24 @@ namespace Transcription
             return languages[(int)language];
         }
 
-        public Transcript(Audio audio, Language lang)
+        public Transcript(SecretProvider secretProvider, Audio audio, Language lang)
         {
-            RecognizeSpeechAsync(audio.Path, "detailedbest", LanguageCode(lang)).Wait();
+            RecognizeSpeechAsync(secretProvider, audio.Path, "detailedbest", LanguageCode(lang)).Wait();
         }
 
-        public Transcript(Audio audio, string lang)
+        public Transcript(SecretProvider secretProvider, Audio audio, string lang)
         {
-            RecognizeSpeechAsync(audio.Path, "detailedbest", lang).Wait();
+            RecognizeSpeechAsync(secretProvider, audio.Path, "detailedbest", lang).Wait();
         }
 
         private async Task RecognizeSpeechAsync(
+            SecretProvider secretProvider,
             string pathWav = @"C:\Users\v-isbojo\Pictures\OtherLangVideo\frfr_output.wav",
             string cogServiceOption = "simple",
             string speechLanguage = "en-us"
             )
         {
-            var config = SpeechConfig.FromSubscription(SecretProvider.GetSubscriptionKey(), "francecentral");
+            var config = SpeechConfig.FromSubscription(secretProvider.GetSubscriptionKey(), "francecentral");
 
             config.SpeechRecognitionLanguage = speechLanguage;
             switch (cogServiceOption)

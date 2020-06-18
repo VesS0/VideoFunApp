@@ -8,6 +8,10 @@ namespace Transcription
 {
     class Program
     {
+        private const string translationkeySecretIdentifier = "https://francevideofunappsecr.vault.azure.net/secrets/TranslationKey/d32fce40406c490194ebd9a6ff868096";
+        private const string subscriptionKeySecretIdentifier = "https://francevideofunappsecr.vault.azure.net/secrets/SubscriptionKey/6e0295187d9d416caa73167391bfe3be";
+        private const string applicationId = "473fb467-aa96-4e5f-b70c-1e4296483756";
+
         static int LevenshtainDistance<L, T>(L generatedWords, L gtWords)
         where T : IEquatable<T>
         where L : IEnumerable<T>
@@ -86,10 +90,11 @@ namespace Transcription
             var video = Video.ImportVideo(pathToVideo);
 
             var audio = ffmpeg.ExtractAudio(video);
+            var secretProvider = new SecretProvider(translationkeySecretIdentifier, subscriptionKeySecretIdentifier, applicationId);
 
-            Transcript transcript = new Transcript(audio, Transcript.Language.EnglishUS);
+            Transcript transcript = new Transcript(secretProvider, audio, Transcript.Language.EnglishUS);
 
-            Translation translate = new Translation(transcript);
+            Translation translate = new Translation(secretProvider, transcript);
 
             Console.WriteLine("Press any key to continue.");
             Console.ReadKey();
@@ -97,6 +102,8 @@ namespace Transcription
 
         public static void TestingTranscript()
         {
+            var secretProvider = new SecretProvider(translationkeySecretIdentifier, subscriptionKeySecretIdentifier, applicationId);
+
             //write value
             // Write the string array to a new file named "WriteLines.txt".
             using (StreamWriter outputFile = new StreamWriter(Path.Combine("E:\\diplomskiTesting", "HeyHeyHeyIspravljeno.txt")))
@@ -122,7 +129,7 @@ namespace Transcription
 
                                     var audio = ffmpeg.ExtractAudio(video);
 
-                                    Transcript transcript = new Transcript(audio, Path.GetFileName(folder));
+                                    Transcript transcript = new Transcript(secretProvider, audio, Path.GetFileName(folder));
 
                                     testFile = allFiles.Where((f) => f.Contains(Path.GetFileNameWithoutExtension(file))).Where(x => x.EndsWith(".vtt")).FirstOrDefault();
                                     var wer = WordErrorRate(testFile, transcript.TranscriptBulkText.Value);

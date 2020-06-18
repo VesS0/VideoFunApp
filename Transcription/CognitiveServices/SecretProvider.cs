@@ -8,26 +8,33 @@ using System.Threading.Tasks;
 
 namespace Transcription
 {
-    class SecretProvider
+    public class SecretProvider
     {
-        private const string translationkeySecretIdentifier = "https://francevideofunappsecr.vault.azure.net/secrets/TranslationKey/d32fce40406c490194ebd9a6ff868096";
-        private const string subscriptionKeySecretIdentifier = "https://francevideofunappsecr.vault.azure.net/secrets/SubscriptionKey/6e0295187d9d416caa73167391bfe3be";
-        private const string applicationId = "473fb467-aa96-4e5f-b70c-1e4296483756";
+        private string translationkeySecretIdentifier;
+        private string subscriptionKeySecretIdentifier;
+        private string applicationId;
 
-        private static KeyVaultClient keyVaultClient = null;
-        private static AzureServiceTokenProvider tokenProvider = new AzureServiceTokenProvider();
-
-        public static string GetSubscriptionKey()
+        public SecretProvider(string translationKeyId, string subscriptionKeyId, string applicationId)
         {
-            return "5d282cd785cf4cf6aacbd809fbdc7576";//  GetSecretFromSecretIdentifier(subscriptionKeySecretIdentifier);
+            this.applicationId = applicationId;
+            this.translationkeySecretIdentifier = translationKeyId;
+            this.subscriptionKeySecretIdentifier = subscriptionKeyId;
         }
 
-        public static string GetTranslationKey()
+        private KeyVaultClient keyVaultClient = null;
+        private AzureServiceTokenProvider tokenProvider = new AzureServiceTokenProvider();
+
+        public string GetSubscriptionKey()
         {
-            return "40d19132f2224d82aa4fd3b947c11b80";// GetSecretFromSecretIdentifier(translationkeySecretIdentifier);
+            return GetSecretFromSecretIdentifier(subscriptionKeySecretIdentifier);
         }
 
-        private static string GetSecretFromSecretIdentifier(string secretIdentifier)
+        public string GetTranslationKey()
+        {
+            return GetSecretFromSecretIdentifier(translationkeySecretIdentifier);
+        }
+
+        private string GetSecretFromSecretIdentifier(string secretIdentifier)
         {
             try
             {
@@ -36,15 +43,14 @@ namespace Transcription
                 return keyVaultClient.GetSecretAsync(secretIdentifier)
                     .ConfigureAwait(false).GetAwaiter().GetResult().Value;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Console.WriteLine(" NO ACCESS TO KEYVAULT SECRETS!!! ");
+                throw;
             }
-
-            return "";
         }
 
-        private static void EnsureClientInitialized()
+        private void EnsureClientInitialized()
         {
             if (keyVaultClient == null)
             {
@@ -52,7 +58,7 @@ namespace Transcription
             }
         }
 
-        private static async Task<string> GetAccessTokenAsync(string authority, string resource, string scope)
+        private async Task<string> GetAccessTokenAsync(string authority, string resource, string scope)
         { 
             var context = new AuthenticationContext(authority, TokenCache.DefaultShared);
 
@@ -67,7 +73,7 @@ namespace Transcription
             return result.AccessToken;
         }
 
-        private static X509Certificate2 GetCertificateWithSubjectFromStore(string subjectName = "CN=videofunapp")
+        private X509Certificate2 GetCertificateWithSubjectFromStore(string subjectName = "CN=videofunapp")
         {
             using (var store = new X509Store(StoreName.My, StoreLocation.LocalMachine))
             {
