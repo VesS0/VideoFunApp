@@ -38,6 +38,6 @@ namespace VideoFunAppUI
 
         private static IPublicClientApplication _clientApp;
 
-        public static IPublicClientApplication PublicClientApp { get { return _clientApp; } }
+        public static IPublicClientApplication PublicClientAppPublicClientApp { get { return _clientApp; } }
     }
 }

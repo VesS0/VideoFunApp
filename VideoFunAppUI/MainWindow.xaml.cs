@@ -167,12 +167,10 @@ namespace VideoFunAppUI
                 throw new Exception("Unsuported language");
             }
 
-            var translation = new Translation(secretProvider, currentTranscript, new Translation.Language[] { lang });
+            var translation = new Translation(secretProvider,currentTranscript, new Translation.Language[] { lang });
 
             textBlock_Translate.Text = translation.translations[0].Text;
             textStartDuration.text = translation.GetTranslatedLinesForLanguageIdx(0);
-            
-            //textBlock.Text = "";
         }
 
         private void SelectVideoButton_Click(object sender, RoutedEventArgs e)

@@ -222,11 +222,6 @@ namespace Transcription
                 start.Add(info.offsetMilliseconds);
                 duration.Add(info.durationMilliseconds);
             }
-
-            public void AddTranslationlineInfo(TranslationText info)
-            {
-                //text.
-            }
         }
     }
 }

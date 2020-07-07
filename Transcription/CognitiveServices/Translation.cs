@@ -153,7 +153,7 @@ namespace Transcription
 
         static string LanguageCode(Language language)
         {
-            string[] languages = new string[]{ "af", "ar", "bn", "bs", "bg", "yue", "ca", "zh-Hans",
+            string[] languages = new string[]{ "af", "ar", "bn", "bs", "bg","yue", "ca", "zh-Hans",
                 "zh-Hant", "hr", "cs", "da", "nl", "en", "et", "fj", "fil", "fi", "fr", "de", "el",
                 "ht", "he", "hi", "mww", "hu", "is","id", "it", "ja", "sw", "tlh", "tlh-Qaak", "ko",
                 "lv", "lt", "mg", "ms", "mt", "nb", "fa", "pl", "pt", "otq", "ro", "ru", "sm",

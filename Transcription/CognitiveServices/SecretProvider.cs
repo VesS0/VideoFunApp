@@ -59,8 +59,8 @@ namespace Transcription
         }
 
         private async Task<string> GetAccessTokenAsync(string authority, string resource, string scope)
-        { 
-            var context = new AuthenticationContext(authority, TokenCache.DefaultShared);
+        {
+             var context = new AuthenticationContext(authority, TokenCache.DefaultShared);
 
             // Naredne dve linije koda mogu biti problem bez certa, njih zakomentarisati i odkomentarisati 2 linije ispod u slucaju toga
             IClientAssertionCertificate cert = new ClientAssertionCertificate(applicationId, GetCertificateWithSubjectFromStore());
